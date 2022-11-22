@@ -12,7 +12,7 @@ func main() {
 		return c.String(http.StatusOK, "test 10 sep aaa")
 	})
 	e.GET("/ip", func(c echo.Context) error {
-		return c.JSON(http.StatusInternalServerError, echo.Map{
+		return c.JSON(http.StatusOK, echo.Map{
 			"realIP":     c.RealIP(),
 			"remoteAddr": c.Request().RemoteAddr,
 		})
