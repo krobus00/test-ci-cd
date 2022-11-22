@@ -11,5 +11,11 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "test 10 sep aaa")
 	})
+	e.GET("/ip", func(c echo.Context) error {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"realIP":     c.RealIP(),
+			"remoteAddr": c.Request().RemoteAddr,
+		})
+	})
 	e.Logger.Fatal(e.Start(":1323"))
 }
