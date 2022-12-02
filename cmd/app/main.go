@@ -9,7 +9,7 @@ import (
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "test 10 sep aaa")
+		return c.String(http.StatusOK, "test 10 sep aaaa")
 	})
 	e.GET("/ip", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, echo.Map{
