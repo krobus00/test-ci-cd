@@ -9,7 +9,13 @@ import (
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "test 5 des aaaaa")
+		return c.String(http.StatusOK, "krobot app")
+	})
+	e.GET("/health", func(c echo.Context) error {
+		return c.String(http.StatusOK, "OK")
+	})
+	e.GET("/readiness", func(c echo.Context) error {
+		return c.String(http.StatusOK, "service ready")
 	})
 	e.GET("/ip", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, echo.Map{
@@ -17,5 +23,5 @@ func main() {
 			"remoteAddr": c.Request().RemoteAddr,
 		})
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":8000"))
 }
