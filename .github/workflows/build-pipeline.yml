@@ -1,8 +1,7 @@
-name: Go package
+name: go-build
 
 on:
-  repository_dispatchs:
-    types: [run-deploy-workflow]
+  workflow_dispatch:
 
 jobs:
   build:
