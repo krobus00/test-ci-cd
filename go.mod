@@ -1,6 +1,6 @@
 module github.com/krobus00/test-ci-cd
 
-go 1.18
+go 1.19
 
 require github.com/labstack/echo/v4 v4.7.2
 
