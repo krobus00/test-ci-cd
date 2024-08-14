@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - 'deployment/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Add your deployment steps here
+    - name: Deploy Application
+      run: |
+        echo "Deploying application..."
+        # Add deployment commands
+
+    - name: Delete Deployment Branch
+      run: |
+        branch_name=${GITHUB_REF#refs/heads/}
+        echo "Deleting branch $branch_name"
+        git push origin --delete $branch_name
