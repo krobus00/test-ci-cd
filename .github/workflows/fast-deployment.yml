@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - 'deployment/*'
+      - 'fast-deployment/*'
 
 jobs:
   deploy:
@@ -13,7 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Add your deployment steps here
     - name: Deploy Application
       run: |
         echo "Deploying application..."

@@ -21,3 +21,20 @@ remove-container:
 	kubectl delete deployment $(SERVICE_NAME) || true
 
 .PHONY: build-image deploy service
+
+fast-deploy:
+	@CURRENT_TIME=$$(date +%Y%m%d%H%M%S); \
+	BRANCH_NAME="fast-deployment/$$CURRENT_TIME"; \
+	CURRENT_BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	echo "Creating and switching to branch $$BRANCH_NAME"; \
+	git checkout -b $$BRANCH_NAME; \
+	if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Committing changes"; \
+		git add .; \
+		git commit -m "FAST DEPLOY"; \
+	fi; \
+	echo "Pushing branch $$BRANCH_NAME"; \
+	git push origin $$BRANCH_NAME; \
+	echo "Switching back to branch $$CURRENT_BRANCH"; \
+	git checkout $$CURRENT_BRANCH; \
+	echo "Branch $$BRANCH_NAME created, pushed, and reverted to $$CURRENT_BRANCH successfully"
