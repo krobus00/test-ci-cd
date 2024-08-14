@@ -16,6 +16,7 @@ jobs:
     - name: Deploy Application
       run: |
         echo "Deploying application..."
+        echo "THIS IS MY CHANGES..."
         # Add deployment commands
 
     - name: Delete Deployment Branch

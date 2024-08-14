@@ -1,4 +1,4 @@
-include .env
+# include .env
 
 # service name
 SERVICE_NAME=${APP_NAME}
@@ -26,15 +26,26 @@ fast-deploy:
 	@CURRENT_TIME=$$(date +%Y%m%d%H%M%S); \
 	BRANCH_NAME="fast-deployment/$$CURRENT_TIME"; \
 	CURRENT_BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	echo "Current branch: $$CURRENT_BRANCH"; \
 	echo "Creating and switching to branch $$BRANCH_NAME"; \
-	git checkout -b $$BRANCH_NAME; \
+	git add .; \
 	if [ -n "$$(git status --porcelain)" ]; then \
-		echo "Committing changes"; \
-		git add .; \
 		git commit -m "FAST DEPLOY"; \
-	fi; \
-	echo "Pushing branch $$BRANCH_NAME"; \
-	git push origin $$BRANCH_NAME; \
-	echo "Switching back to branch $$CURRENT_BRANCH"; \
-	git checkout $$CURRENT_BRANCH; \
-	echo "Branch $$BRANCH_NAME created, pushed, and reverted to $$CURRENT_BRANCH successfully"
+		echo "Changes committed"; \
+		git checkout -b $$BRANCH_NAME; \
+		echo "Pushing branch $$BRANCH_NAME"; \
+		git push origin $$BRANCH_NAME; \
+		echo "Switching back to branch $$CURRENT_BRANCH"; \
+		git checkout $$CURRENT_BRANCH; \
+		git reset --soft HEAD~1; \
+		git branch -D $$BRANCH_NAME; \
+		echo "Branch $$BRANCH_NAME created, pushed, and reverted to $$CURRENT_BRANCH successfully"; \
+	else \
+		echo "No changes to commit"; \
+		git checkout -b $$BRANCH_NAME; \
+		echo "Pushing branch $$BRANCH_NAME"; \
+		git push origin $$BRANCH_NAME; \
+		echo "Switching back to branch $$CURRENT_BRANCH"; \
+		git checkout $$CURRENT_BRANCH; \
+		git branch -D $$BRANCH_NAME; \
+	fi
